@@ -4,7 +4,7 @@ from rp2 import PIO, asm_pio
 from machine import Pin
 
 
-@asm_pio(set_init=(PIO.OUT_HIGH),autopush=True, push_thresh=8) #output one byte at a time
+@asm_pio(set_init=PIO.OUT_HIGH, autopush=True, push_thresh=8)
 def DHT11():
     # pull down pins for 20ms (32000 cycles)
     set(pindirs, 1)
@@ -60,7 +60,7 @@ def read_handler(sm):
 
 
 def main():
-    dht_data = Pin(2, Pin.IN, Pin.PULL_UP) #connect GPIO 15 to 'out' on DHT11
+    dht_data = Pin(2, Pin.IN, Pin.PULL_UP) # GPIO 2 for data pin
 
     sm = rp2.StateMachine(0, DHT11, freq=1600000, set_base=dht_data, in_base=dht_data)
     sm.irq(handler=read_handler)
